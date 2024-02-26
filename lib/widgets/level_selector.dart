@@ -15,7 +15,7 @@ class LevelSelector extends StatelessWidget {
       decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/png/mike.png'),
-          fit: BoxFit.cover,
+          fit: BoxFit.contain,
         ),
       ),
       padding: EdgeInsets.symmetric(
