@@ -17,6 +17,7 @@ class SplashScreen extends StatelessWidget {
               width: 200.sp,
               height: 200.sp,
               decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
                 boxShadow: [
                   BoxShadow(
                     blurRadius: 20.r,
