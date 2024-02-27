@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sea_night_be_brave/widgets/widgets.dart';
 
 class MainScreen extends StatelessWidget {
@@ -11,9 +12,9 @@ class MainScreen extends StatelessWidget {
       bg: 'assets/png/bg/bg2.png',
       child: Column(
         children: [
-          const LevelSelector(),
+          const Expanded(child: LevelSelector()),
           SizedBox(height: 32.h),
-          const CustomButton1(text: 'Start'),
+          CustomButton1(text: 'Start', onTap: () => context.go('/game')),
           SizedBox(height: 60.h),
         ],
       ),

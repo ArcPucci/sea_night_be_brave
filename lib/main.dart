@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sea_night_be_brave/screens/game_screen.dart';
 import 'package:sea_night_be_brave/screens/screens.dart';
 
 void main() {
@@ -75,6 +76,18 @@ class _MyAppState extends State<MyApp> {
                   child: const MainScreen(),
                 );
               },
+              routes: [
+                GoRoute(
+                  path: 'game',
+                  pageBuilder: (context, state) {
+                    return buildPageWithDefaultTransition(
+                      context: context,
+                      state: state,
+                      child: const GameScreen(),
+                    );
+                  },
+                ),
+              ],
             ),
             GoRoute(
               path: '/store',

@@ -39,6 +39,15 @@ class AppTheme {
     end: Alignment.bottomCenter,
   );
 
+  static const LinearGradient secondGradient = LinearGradient(
+    colors: [
+      Color(0xFF1F8AB7),
+      Color(0xFF0059AB),
+    ],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  );
+
   static final LinearGradient gradient1 = LinearGradient(
     colors: [
       const Color(0xFF018BA3).withOpacity(0),

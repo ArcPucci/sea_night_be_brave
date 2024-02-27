@@ -11,11 +11,10 @@ class LevelSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 390.w,
-      height: 576.h,
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/png/mike.png'),
-          fit: BoxFit.contain,
+          image: AssetImage('assets/png/david.png'),
+          fit: BoxFit.cover,
         ),
       ),
       padding: EdgeInsets.symmetric(

@@ -26,7 +26,7 @@ class User extends Box {
 
 class Empty extends Box {
   @override
-  String get skin => "";
+  String get skin => "assets/png/cells/empty.png";
 }
 
 class Finish extends Box {

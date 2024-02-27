@@ -1,0 +1,65 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gradient_borders/gradient_borders.dart';
+import 'package:sea_night_be_brave/models/models.dart';
+import 'package:sea_night_be_brave/utils/utils.dart';
+
+class CellWidget extends StatelessWidget {
+  const CellWidget({
+    super.key,
+    required this.box,
+  });
+
+  final Box box;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 336.r / 6,
+      height: 560.r / 10,
+      decoration: BoxDecoration(
+        color: (box.isOpened && box is! User) ? AppTheme.darkBlue : null,
+        borderRadius: BorderRadius.circular(4),
+        border: GradientBoxBorder(
+          width: 2.sp,
+          gradient:
+              box.isOpened ? AppTheme.secondGradient : AppTheme.thirdGradient,
+        ),
+        image: box is User
+            ? null
+            : DecorationImage(
+                image: box.isOpened
+                    ? const AssetImage('assets/png/bubbles.png')
+                    : const AssetImage('assets/png/seabed.png'),
+                fit: BoxFit.cover,
+                alignment: Alignment.topCenter,
+              ),
+      ),
+      alignment: Alignment.center,
+      clipBehavior: Clip.antiAlias,
+      child: _buildImage(),
+    );
+  }
+
+  Widget _buildImage() {
+    if (box is User) {
+      return Transform.scale(
+        scale: 2,
+        child: Image.asset(
+          box.skin,
+          width: 56.r,
+          height: 56.r,
+          alignment: const Alignment(0, -1.75),
+          fit: BoxFit.cover,
+        ),
+      );
+    }
+    if (!box.isOpened) return const SizedBox();
+    return Image.asset(
+      box.skin,
+      width: 56.r,
+      height: 56.r,
+      fit: BoxFit.cover,
+    );
+  }
+}

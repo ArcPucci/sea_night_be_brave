@@ -8,3 +8,6 @@ export 'custom_button_2.dart';
 export 'custom_button_3.dart';
 export 'total_balance.dart';
 export 'carousel_item.dart';
+export 'game_app_bar.dart';
+export 'move_pad.dart';
+export 'cell_widget.dart';
