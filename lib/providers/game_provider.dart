@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sea_night_be_brave/models/models.dart';
 import 'package:sea_night_be_brave/providers/providers.dart';
-import 'package:sea_night_be_brave/utils/utils.dart';
 
 enum BoxType {
   gold,
@@ -24,7 +23,7 @@ enum BoxType {
 }
 
 class GameProvider extends ChangeNotifier {
-  // final CoinManager coinManager;
+  final StoreProvider storeProvider;
   final Level level;
   final Box user;
 
@@ -56,15 +55,17 @@ class GameProvider extends ChangeNotifier {
   // final Future<int> Function() showMiniGameDialog;
   // final Future<bool> Function(bool success, Level level) showFinishDialog;
 
+  bool _deviceWorks = true;
+
   GameProvider({
     required LevelManager levelManager,
-    // required StoreManager storeManager,
+    required this.storeProvider,
     // required this.showMiniGameDialog,
     // required this.coinManager,
     // required this.showFinishDialog,
     required this.router,
   })  : level = levelManager.level,
-        user = User('assets/png/mike.png') {
+        user = User(storeProvider.characterCard.asset) {
     init();
   }
 
@@ -81,6 +82,8 @@ class GameProvider extends ChangeNotifier {
   bool get canMove => _canMove;
 
   Box get _currentBox => matrix[y][x];
+
+  bool _deviceUsed = false;
 
   void _updatePosition(AxisDirection direction) {
     switch (direction) {
@@ -217,12 +220,8 @@ class GameProvider extends ChangeNotifier {
       await Future.delayed(const Duration(seconds: 1));
       _boxType = BoxType.idle;
       notifyListeners();
-      // final total = _balance + level.reward;
-      // coinManager.addMoney(total);
-      // final playAgain = await showFinishDialog(true, level);
       _canMove = false;
       matrix[y][x] = _underBox;
-      // if (!playAgain) return;
       init();
     }
 
@@ -243,11 +242,13 @@ class GameProvider extends ChangeNotifier {
       case Finish():
         _balance += 30;
 
+        storeProvider.onAddMoney(_balance);
+        _balance = 0;
         _boxType = BoxType.exit;
         notifyListeners();
         break;
       case Gold():
-        _balance += 10;
+        onUseDavidsAbility(10);
         _boxType = BoxType.gold;
         notifyListeners();
 
@@ -257,7 +258,7 @@ class GameProvider extends ChangeNotifier {
         notifyListeners();
         break;
       case Diamond():
-        _balance += 25;
+        onUseDavidsAbility(25);
         _boxType = BoxType.diamond;
         notifyListeners();
 
@@ -267,7 +268,7 @@ class GameProvider extends ChangeNotifier {
         notifyListeners();
         break;
       case Emerald():
-        _balance += 15;
+        onUseDavidsAbility(15);
         _boxType = BoxType.emerald;
         notifyListeners();
 
@@ -293,6 +294,7 @@ class GameProvider extends ChangeNotifier {
         notifyListeners();
         break;
       case Worm():
+        _deviceWorks = false;
         _boxType = BoxType.worm;
         notifyListeners();
 
@@ -302,6 +304,7 @@ class GameProvider extends ChangeNotifier {
         notifyListeners();
         break;
       case Shark():
+        if (user.skin.contains('nicolas') && !_deviceUsed) break;
         onBalanceMinus(20);
         _boxType = BoxType.shark;
         notifyListeners();
@@ -318,7 +321,7 @@ class GameProvider extends ChangeNotifier {
     final lucky = Random().nextBool();
     if (_boxType == BoxType.luckyChoose) {
       _boxType = lucky ? BoxType.jackpot : BoxType.empty;
-      if (lucky) _balance += 100;
+      if (lucky) onUseDavidsAbility(100);
     } else if (_boxType == BoxType.unluckyChoose) {
       _boxType = lucky ? BoxType.empty : BoxType.antiJackpot;
       if (!lucky) onBalanceMinus(100);
@@ -337,9 +340,19 @@ class GameProvider extends ChangeNotifier {
     } else {
       _balance = 0;
     }
+    final coins = (storeProvider.coins * 0.05).round();
+    storeProvider.onMinusMoney(coins);
   }
 
   void onExit() {
     router.pop();
+  }
+
+  void onUseDavidsAbility(int coins) {
+    if (user.skin.contains('david') && _deviceWorks) {
+      _balance += (coins * 1.05).round();
+    } else {
+      _balance += coins;
+    }
   }
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:sea_night_be_brave/services/preferences_services.dart';
 import 'package:sea_night_be_brave/utils/utils.dart';
 import 'package:sea_night_be_brave/widgets/widgets.dart';
 
@@ -45,6 +48,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   void onNext() {
     if (currentIndex == 1) {
+      final provider = Provider.of<PreferencesService>(
+        context,
+        listen: false,
+      );
+      provider.setFirstInit();
+      context.go('/');
       return;
     }
     controller.nextPage(

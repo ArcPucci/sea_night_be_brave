@@ -82,4 +82,21 @@ class AppTextStyles {
     height: 26 / 22,
     color: Colors.white,
   );
+
+
+  static final TextStyle dialogTitle = TextStyle(
+    fontSize: 17.r,
+    fontWeight: FontWeight.w600,
+    height: 22 / 17,
+    letterSpacing: -0.41,
+    color: Colors.black,
+  );
+
+  static final TextStyle dialogContent = TextStyle(
+    fontSize: 13.r,
+    fontWeight: FontWeight.w400,
+    height: 16 / 13,
+    letterSpacing: -0.08,
+    color: Colors.black,
+  );
 }

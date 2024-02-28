@@ -10,4 +10,14 @@ class CharacterCard extends CardModel {
     required super.asset,
     required super.price,
   });
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CharacterCard &&
+          runtimeType == other.runtimeType &&
+          subTitle == other.subTitle;
+
+  @override
+  int get hashCode => subTitle.hashCode;
 }

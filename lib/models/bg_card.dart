@@ -10,4 +10,15 @@ class BGCard extends CardModel {
     required this.image,
     required super.price,
   });
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      super == other &&
+          other is BGCard &&
+          runtimeType == other.runtimeType &&
+          image == other.image;
+
+  @override
+  int get hashCode => super.hashCode ^ image.hashCode;
 }

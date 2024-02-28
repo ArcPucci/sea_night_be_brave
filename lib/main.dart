@@ -64,7 +64,28 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _router = GoRouter(
+      initialLocation: '/splash',
       routes: [
+        GoRoute(
+          path: '/splash',
+          pageBuilder: (context, state) {
+            return buildPageWithDefaultTransition(
+              context: context,
+              state: state,
+              child: const SplashScreen(),
+            );
+          },
+        ),
+        GoRoute(
+          path: '/onboarding',
+          pageBuilder: (context, state) {
+            return buildPageWithDefaultTransition(
+              context: context,
+              state: state,
+              child: const OnboardingScreen(),
+            );
+          },
+        ),
         ShellRoute(
           pageBuilder: (context, state, child) {
             return buildPageWithDefaultTransition(
@@ -159,7 +180,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(
           create: (context) => StoreProvider(
             service: Provider.of(context, listen: false),
-          ),
+          )..init(),
         ),
         ChangeNotifierProvider(
           create: (context) => LevelManager(router: _router),

@@ -15,13 +15,14 @@ class PreferencesService {
   static const coinsKey = 'COINS';
   static const selectedSkinKey = 'SELECTED_SKIN';
   static const selectedBGKey = 'SELECTED_BG';
+  static const firstInitKey = "FIRST_INIT";
 
   Future<void> setCoins(int coins) async {
     await _preferences.setInt(coinsKey, coins);
   }
 
   int getCoins() {
-    return _preferences.getInt(coinsKey) ?? 100;
+    return _preferences.getInt(coinsKey) ?? 10000;
   }
 
   Future<void> setPremium() async {
@@ -32,16 +33,14 @@ class PreferencesService {
     return _preferences.getBool(premiumKey) ?? false;
   }
 
-  Future<void> setSkins(List<CharacterCard> skins) async {
-    final map = skins.map((e) => e.id.toString()).toList();
+  Future<void> setSkins(List<int> skins) async {
+    final map = skins.map((e) => e.toString()).toList();
     await _preferences.setStringList(skinsKey, map);
   }
 
-  List<CharacterCard> getSkins() {
-    final map = _preferences.getStringList(skinsKey) ?? [];
-    if (map.isEmpty) return [characterCards.first];
-    final data = map.map((e) => int.parse(e)).toList();
-    final skins = characterCards.where((e) => data.contains(e.id)).toList();
+  List<int> getSkins() {
+    final map = _preferences.getStringList(skinsKey) ?? ['0'];
+    final skins = map.map((e) => int.parse(e)).toList();
     return skins;
   }
 
@@ -55,16 +54,14 @@ class PreferencesService {
     return skin;
   }
 
-  Future<void> setBackgrounds(List<BGCard> bg) async {
-    final map = bg.map((e) => e.id.toString()).toList();
+  Future<void> setBackgrounds(List<int> bg) async {
+    final map = bg.map((e) => e.toString()).toList();
     await _preferences.setStringList(bgKey, map);
   }
 
-  List<BGCard> getBackgrounds() {
-    final map = _preferences.getStringList(bgKey) ?? [];
-    if (map.isEmpty) return [bgCards.first];
-    final data = map.map((e) => int.parse(e)).toList();
-    final bg = bgCards.where((e) => data.contains(e.id)).toList();
+  List<int> getBackgrounds() {
+    final map = _preferences.getStringList(bgKey) ?? ['0'];
+    final bg = map.map((e) => int.parse(e)).toList();
     return bg;
   }
 
@@ -76,5 +73,13 @@ class PreferencesService {
     final id = _preferences.getInt(selectedBGKey) ?? 0;
     final bg = bgCards.firstWhere((e) => e.id == id);
     return bg;
+  }
+
+  Future<void> setFirstInit() async {
+    await _preferences.setBool(firstInitKey, false);
+  }
+
+  bool getFirstInit() {
+    return _preferences.getBool(firstInitKey) ?? true;
   }
 }
