@@ -37,7 +37,7 @@ final List<Level> levels = [
   const Level(
     id: 2,
     level: 'Extreme',
-    asset: 'assets/png/david.png',
+    asset: 'assets/png/nicolas.png',
     description: 'Moderate number of finds and more obstacles',
     golds: 8,
     emeralds: 4,

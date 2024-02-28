@@ -18,19 +18,23 @@ class CellWidget extends StatelessWidget {
       width: 336.r / 6,
       height: 560.r / 10,
       decoration: BoxDecoration(
-        color: (box.isOpened && box is! User) ? AppTheme.darkBlue : null,
+        color: (box.isOpened && box is! User)
+            ? box is Finish
+                ? AppTheme.blue2
+                : AppTheme.darkBlue
+            : null,
         borderRadius: BorderRadius.circular(4),
         border: GradientBoxBorder(
           width: 2.sp,
           gradient:
               box.isOpened ? AppTheme.secondGradient : AppTheme.thirdGradient,
         ),
-        image: box is User
+        image: (box is User || box is Finish)
             ? null
             : DecorationImage(
                 image: box.isOpened
-                    ? const AssetImage('assets/png/bubbles.png')
-                    : const AssetImage('assets/png/seabed.png'),
+                    ? const AssetImage('assets/png/cells/bubbles.png')
+                    : const AssetImage('assets/png/cells/seabed.png'),
                 fit: BoxFit.cover,
                 alignment: Alignment.topCenter,
               ),

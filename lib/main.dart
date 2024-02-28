@@ -3,15 +3,23 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:sea_night_be_brave/providers/providers.dart';
 import 'package:sea_night_be_brave/screens/game_screen.dart';
 import 'package:sea_night_be_brave/screens/screens.dart';
+import 'package:sea_night_be_brave/services/preferences_services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  runZonedGuarded(() {
+  runZonedGuarded(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+
+    final preferences = await SharedPreferences.getInstance();
+
     runApp(ScreenUtilInit(
       designSize: const Size(390, 844),
       builder: (context, child) {
-        return const MyApp();
+        return MyApp(preferences: preferences);
       },
     ));
   }, (error, stack) {
@@ -41,7 +49,9 @@ CustomTransitionPage buildPageWithDefaultTransition({
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required this.preferences});
+
+  final SharedPreferences preferences;
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -139,14 +149,30 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-        fontFamily: 'Poppins',
+    return MultiProvider(
+      providers: [
+        Provider(
+          create: (context) => PreferencesService(
+            preferences: widget.preferences,
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => StoreProvider(
+            service: Provider.of(context, listen: false),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => LevelManager(router: _router),
+        ),
+      ],
+      child: MaterialApp.router(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        routerConfig: _router,
       ),
-      routerConfig: _router,
     );
   }
 }

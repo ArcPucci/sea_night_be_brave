@@ -11,3 +11,4 @@ export 'carousel_item.dart';
 export 'game_app_bar.dart';
 export 'move_pad.dart';
 export 'cell_widget.dart';
+export 'find_view.dart';

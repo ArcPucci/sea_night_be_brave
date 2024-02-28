@@ -1,9 +1,27 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sea_night_be_brave/models/models.dart';
+import 'package:sea_night_be_brave/providers/providers.dart';
 import 'package:sea_night_be_brave/utils/utils.dart';
 
-enum BoxType { gold, emerald, diamond, lucky, unlucky, worm, shark, exit, idle }
+enum BoxType {
+  gold,
+  emerald,
+  diamond,
+  lucky,
+  unlucky,
+  worm,
+  shark,
+  exit,
+  idle,
+  luckyChoose,
+  unluckyChoose,
+  empty,
+  jackpot,
+  antiJackpot,
+}
 
 class GameProvider extends ChangeNotifier {
   // final CoinManager coinManager;
@@ -14,10 +32,6 @@ class GameProvider extends ChangeNotifier {
 
   late int x;
   late int y;
-
-  late int _medKit;
-  late int _shield;
-  late int _health;
 
   late int _balance;
 
@@ -39,21 +53,17 @@ class GameProvider extends ChangeNotifier {
 
   BoxType get boxType => _boxType;
 
-  bool _canView = false;
-
-  bool get canView => _canView;
-
   // final Future<int> Function() showMiniGameDialog;
   // final Future<bool> Function(bool success, Level level) showFinishDialog;
 
   GameProvider({
-    // required LevelManager levelManager,
+    required LevelManager levelManager,
     // required StoreManager storeManager,
     // required this.showMiniGameDialog,
     // required this.coinManager,
     // required this.showFinishDialog,
     required this.router,
-  })  : level = levels.first,
+  })  : level = levelManager.level,
         user = User('assets/png/mike.png') {
     init();
   }
@@ -66,13 +76,7 @@ class GameProvider extends ChangeNotifier {
 
   bool get canGoLeft => x > 0;
 
-  int get medKit => _medKit;
-
   int get balance => _balance;
-
-  int get health => _health;
-
-  int get shield => _shield;
 
   bool get canMove => _canMove;
 
@@ -119,12 +123,12 @@ class GameProvider extends ChangeNotifier {
     _canMove = true;
 
     matrix = [];
-    _underBox = Empty()..use();
+    _underBox = Finish()..use();
 
     final count = golds + emeralds + diamonds + lucky + unlucky + worm + shark;
 
     List<Box> tempBox = [];
-    while (count > tempBox.length) {  
+    while (count > tempBox.length) {
       if (golds > 0) {
         tempBox.add(Gold());
         golds--;
@@ -153,7 +157,6 @@ class GameProvider extends ChangeNotifier {
         tempBox.add(Shark());
         shark--;
       }
-      print(tempBox.length);
     }
 
     tempBox.addAll(
@@ -234,36 +237,109 @@ class GameProvider extends ChangeNotifier {
     _underBox.use();
     switch (_underBox) {
       case User():
-        // TODO: Handle this case.
         break;
       case Empty():
-        // TODO: Handle this case.
         break;
       case Finish():
-        // TODO: Handle this case.
+        _balance += 30;
+
+        _boxType = BoxType.exit;
+        notifyListeners();
         break;
       case Gold():
-        // TODO: Handle this case.
+        _balance += 10;
+        _boxType = BoxType.gold;
+        notifyListeners();
+
+        await Future.delayed(const Duration(seconds: 1));
+        _boxType = BoxType.idle;
+
+        notifyListeners();
         break;
       case Diamond():
-        // TODO: Handle this case.
+        _balance += 25;
+        _boxType = BoxType.diamond;
+        notifyListeners();
+
+        await Future.delayed(const Duration(seconds: 1));
+        _boxType = BoxType.idle;
+
+        notifyListeners();
         break;
       case Emerald():
-        // TODO: Handle this case.
+        _balance += 15;
+        _boxType = BoxType.emerald;
+        notifyListeners();
+
+        await Future.delayed(const Duration(seconds: 1));
+        _boxType = BoxType.idle;
+
+        notifyListeners();
         break;
       case LuckyCoin():
-        // TODO: Handle this case.
+        _boxType = BoxType.lucky;
+        notifyListeners();
+
+        await Future.delayed(const Duration(seconds: 1));
+        _boxType = BoxType.luckyChoose;
+        notifyListeners();
         break;
       case UnluckyCoin():
-        // TODO: Handle this case.
+        _boxType = BoxType.unlucky;
+        notifyListeners();
+
+        await Future.delayed(const Duration(seconds: 1));
+        _boxType = BoxType.unluckyChoose;
+        notifyListeners();
         break;
       case Worm():
-        // TODO: Handle this case.
+        _boxType = BoxType.worm;
+        notifyListeners();
+
+        await Future.delayed(const Duration(seconds: 1));
+        _boxType = BoxType.idle;
+
+        notifyListeners();
         break;
       case Shark():
-        // TODO: Handle this case.
+        onBalanceMinus(20);
+        _boxType = BoxType.shark;
+        notifyListeners();
+
+        await Future.delayed(const Duration(seconds: 1));
+        _boxType = BoxType.idle;
+
+        notifyListeners();
         break;
     }
+  }
+
+  void onChoose() async {
+    final lucky = Random().nextBool();
+    if (_boxType == BoxType.luckyChoose) {
+      _boxType = lucky ? BoxType.jackpot : BoxType.empty;
+      if (lucky) _balance += 100;
+    } else if (_boxType == BoxType.unluckyChoose) {
+      _boxType = lucky ? BoxType.empty : BoxType.antiJackpot;
+      if (!lucky) onBalanceMinus(100);
+    }
+
     notifyListeners();
+
+    await Future.delayed(const Duration(seconds: 1));
+    _boxType = BoxType.idle;
+    notifyListeners();
+  }
+
+  void onBalanceMinus(int count) {
+    if (_balance >= count) {
+      _balance -= count;
+    } else {
+      _balance = 0;
+    }
+  }
+
+  void onExit() {
+    router.pop();
   }
 }

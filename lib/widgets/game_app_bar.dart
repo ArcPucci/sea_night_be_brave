@@ -7,10 +7,12 @@ class GameAppBar extends StatelessWidget {
     super.key,
     this.onInfo,
     this.onClose,
+    required this.balance,
   });
 
   final VoidCallback? onInfo;
   final VoidCallback? onClose;
+  final int balance;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class GameAppBar extends StatelessWidget {
           ),
           Row(
             children: [
-              Text('0', style: AppTextStyles.textStyle6),
+              Text('$balance', style: AppTextStyles.textStyle6),
               SizedBox(width: 2.w),
               Image.asset(
                 'assets/png/icons/coins2.png',

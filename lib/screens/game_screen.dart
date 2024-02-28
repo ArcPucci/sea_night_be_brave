@@ -14,6 +14,7 @@ class GameScreen extends StatelessWidget {
       create: (BuildContext context) {
         return GameProvider(
           router: GoRouter.of(context),
+          levelManager: Provider.of(context, listen: false),
         );
       },
       child: Consumer<GameProvider>(
@@ -23,7 +24,7 @@ class GameScreen extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(height: 19.h),
-                const GameAppBar(),
+                GameAppBar(balance: value.balance),
                 Expanded(
                   child: Center(
                     child: SizedBox(
@@ -47,10 +48,21 @@ class GameScreen extends StatelessWidget {
                             ),
                           ),
                           Positioned(
-                            left: -26.r,
-                            top: -26.r,
-                            child: const MovePad(),
+                            left: -26.r + 56.r * value.x,
+                            top: -26.r + 56.r * value.y,
+                            child: MovePad(
+                              onDown: value.goDown,
+                              onLeft: value.goLeft,
+                              onRight: value.goRight,
+                              onUp: value.goUp,
+                            ),
                           ),
+                          if (value.boxType != BoxType.idle)
+                            FindView(
+                              boxType: value.boxType,
+                              onChoose: value.onChoose,
+                              onExit: value.onExit,
+                            ),
                         ],
                       ),
                     ),
