@@ -21,6 +21,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return BGWidget(
+      hasBottomBar: false,
       child: SafeArea(
         child: Column(
           children: [
@@ -34,7 +35,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ],
               ),
             ),
-            SizedBox(height: 40.h),
             CustomButton1(
               text: currentIndex == 0 ? 'Next' : 'Continue',
               onTap: onNext,
