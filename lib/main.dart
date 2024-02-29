@@ -114,7 +114,7 @@ class _MyAppState extends State<MyApp> {
                     return buildPageWithDefaultTransition(
                       context: context,
                       state: state,
-                      child: const GameScreen(),
+                      child: GameScreen(router: _router),
                     );
                   },
                 ),

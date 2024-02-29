@@ -26,6 +26,7 @@ class BGWidget extends StatelessWidget {
           Positioned.fill(
             child: SafeArea(
               top: false,
+              bottom: hasBottomBar,
               child: Column(
                 children: [
                   Expanded(

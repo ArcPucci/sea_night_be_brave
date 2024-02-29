@@ -24,11 +24,14 @@ class CellWidget extends StatelessWidget {
                 : AppTheme.darkBlue
             : null,
         borderRadius: BorderRadius.circular(4),
-        border: GradientBoxBorder(
-          width: 2.sp,
-          gradient:
-              box.isOpened ? AppTheme.secondGradient : AppTheme.thirdGradient,
-        ),
+        border: (box is User)
+            ? null
+            : GradientBoxBorder(
+                width: 2.r,
+                gradient: box.isOpened
+                    ? AppTheme.secondGradient
+                    : AppTheme.thirdGradient,
+              ),
         image: (box is User || box is Finish)
             ? null
             : DecorationImage(
@@ -47,15 +50,31 @@ class CellWidget extends StatelessWidget {
 
   Widget _buildImage() {
     if (box is User) {
-      return Transform.scale(
-        scale: 2,
-        child: Image.asset(
-          box.skin,
-          width: 56.r,
-          height: 56.r,
-          alignment: const Alignment(0, -1.75),
-          fit: BoxFit.cover,
-        ),
+      return Stack(
+        alignment: Alignment.center,
+        children: [
+          Transform.scale(
+            scale: 2,
+            child: Image.asset(
+              box.skin,
+              width: 56.r,
+              height: 56.r,
+              alignment: const Alignment(0, -1.75),
+              fit: BoxFit.cover,
+            ),
+          ),
+          Container(
+            width: 56.r,
+            height: 56.r,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              border: GradientBoxBorder(
+                width: 2.sp,
+                gradient: AppTheme.secondGradient,
+              ),
+            ),
+          ),
+        ],
       );
     }
     if (!box.isOpened) return const SizedBox();

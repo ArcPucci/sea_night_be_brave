@@ -52,17 +52,11 @@ class GameProvider extends ChangeNotifier {
 
   BoxType get boxType => _boxType;
 
-  // final Future<int> Function() showMiniGameDialog;
-  // final Future<bool> Function(bool success, Level level) showFinishDialog;
-
   bool _deviceWorks = true;
 
   GameProvider({
     required LevelManager levelManager,
     required this.storeProvider,
-    // required this.showMiniGameDialog,
-    // required this.coinManager,
-    // required this.showFinishDialog,
     required this.router,
   })  : level = levelManager.level,
         user = User(storeProvider.characterCard.asset) {
@@ -213,18 +207,6 @@ class GameProvider extends ChangeNotifier {
 
     notifyListeners();
 
-    if (_underBox is Finish) {
-      // _boxType = BoxType.chest;
-      notifyListeners();
-
-      await Future.delayed(const Duration(seconds: 1));
-      _boxType = BoxType.idle;
-      notifyListeners();
-      _canMove = false;
-      matrix[y][x] = _underBox;
-      init();
-    }
-
     await _useEffect();
     notifyListeners();
   }
@@ -355,4 +337,9 @@ class GameProvider extends ChangeNotifier {
       _balance += coins;
     }
   }
+
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  // }
 }

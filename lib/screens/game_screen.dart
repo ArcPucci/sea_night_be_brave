@@ -9,14 +9,16 @@ import 'package:sea_night_be_brave/providers/providers.dart';
 import 'package:sea_night_be_brave/widgets/widgets.dart';
 
 class GameScreen extends StatelessWidget {
-  const GameScreen({super.key});
+  const GameScreen({super.key, required this.router});
+
+  final GoRouter router;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (BuildContext context) {
         return GameProvider(
-          router: GoRouter.of(context),
+          router: router,
           levelManager: Provider.of(context, listen: false),
           storeProvider: Provider.of(context, listen: false),
         );
