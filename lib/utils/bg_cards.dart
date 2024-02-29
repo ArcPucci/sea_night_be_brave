@@ -4,7 +4,7 @@ final List<BGCard> bgCards = [
   BGCard(
     id: 0,
     title: 'Standart',
-    image: 'assets/png/bg/standart.png',
+    image: '',
     asset: 'assets/png/bg/standart.png',
     price: 0,
   ),

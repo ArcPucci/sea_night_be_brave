@@ -15,6 +15,7 @@ class Level {
   final int width;
   final int height;
   final Color color;
+  final String bg;
 
   const Level({
     required this.id,
@@ -31,5 +32,6 @@ class Level {
     required this.width,
     required this.color,
     required this.height,
+    required this.bg,
   });
 }

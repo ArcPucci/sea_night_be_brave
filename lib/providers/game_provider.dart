@@ -26,6 +26,7 @@ class GameProvider extends ChangeNotifier {
   final StoreProvider storeProvider;
   final Level level;
   final Box user;
+  final BGCard bgCard;
 
   final GoRouter router;
 
@@ -59,7 +60,8 @@ class GameProvider extends ChangeNotifier {
     required this.storeProvider,
     required this.router,
   })  : level = levelManager.level,
-        user = User(storeProvider.characterCard.asset) {
+        user = User(storeProvider.characterCard.asset),
+        bgCard = storeProvider.bgCard {
     init();
   }
 
@@ -338,8 +340,8 @@ class GameProvider extends ChangeNotifier {
     }
   }
 
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  // }
+// @override
+// void dispose() {
+//   super.dispose();
+// }
 }

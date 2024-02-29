@@ -28,7 +28,8 @@ class GameScreen extends StatelessWidget {
           return PopScope(
             canPop: false,
             child: BGWidget(
-              hasBG: false,
+              hasBG: value.bgCard.image.isEmpty ? false : true,
+              bg: value.bgCard.image,
               child: Column(
                 children: [
                   SizedBox(height: 12.h),

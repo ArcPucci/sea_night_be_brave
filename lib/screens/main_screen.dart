@@ -13,7 +13,7 @@ class MainScreen extends StatelessWidget {
     return Consumer<LevelManager>(
       builder: (BuildContext context, value, Widget? child) {
         return BGWidget(
-          bg: 'assets/png/bg/bg2.png',
+          bg: value.level.bg,
           child: Column(
             children: [
               Expanded(

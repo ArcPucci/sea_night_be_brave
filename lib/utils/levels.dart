@@ -17,6 +17,7 @@ final List<Level> levels = [
     width: 308,
     height: 543,
     color: AppTheme.green,
+    bg: 'assets/png/bg/bg2.png',
   ),
   const Level(
     id: 1,
@@ -33,6 +34,7 @@ final List<Level> levels = [
     width: 377,
     height: 526,
     color: AppTheme.yellow,
+    bg: 'assets/png/bg/bg3.png',
   ),
   const Level(
     id: 2,
@@ -49,5 +51,6 @@ final List<Level> levels = [
     width: 390,
     height: 535,
     color: AppTheme.red,
+    bg: 'assets/png/bg/bg4.png',
   ),
 ];
