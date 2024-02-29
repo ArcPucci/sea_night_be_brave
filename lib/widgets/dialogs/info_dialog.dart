@@ -133,7 +133,7 @@ class _InfoDialogState extends State<InfoDialog> {
             ],
           ),
         ),
-        SizedBox(height: 24.h),
+        SizedBox(height: 12.h),
         SizedBox(
           width: 286.w,
           child: Text(
@@ -142,7 +142,7 @@ class _InfoDialogState extends State<InfoDialog> {
             textAlign: TextAlign.center,
           ),
         ),
-        SizedBox(height: 20.h),
+        SizedBox(height: 12.h),
         SizedBox(
           width: 317.w,
           child: Column(
