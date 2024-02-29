@@ -30,17 +30,22 @@ class GameAppBar extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          Row(
-            children: [
-              Text('$balance', style: AppTextStyles.textStyle6),
-              SizedBox(width: 2.w),
-              Image.asset(
-                'assets/png/icons/coins2.png',
-                width: 32.r,
-                height: 32.r,
-                fit: BoxFit.cover,
-              ),
-            ],
+          Container(
+            width: 100.w,
+            height: 49.h,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('$balance', style: AppTextStyles.textStyle6),
+                SizedBox(width: 2.w),
+                Image.asset(
+                  'assets/png/icons/coins2.png',
+                  width: 32.r,
+                  height: 32.r,
+                  fit: BoxFit.cover,
+                ),
+              ],
+            ),
           ),
           GestureDetector(
             onTap: onClose,

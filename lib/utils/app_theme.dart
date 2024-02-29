@@ -16,6 +16,7 @@ class AppTheme {
   static const Color red = Color(0xFFFF4040);
   static const Color systemBlue = Color(0xFF007AFF);
   static const Color systemRed = Color(0xFFFF0000);
+  static const Color turquoise = Color(0xFF00D2D2);
 
   static const LinearGradient bgGradient = LinearGradient(
     colors: [

@@ -22,7 +22,7 @@ class PreferencesService {
   }
 
   int getCoins() {
-    return _preferences.getInt(coinsKey) ?? 10000;
+    return _preferences.getInt(coinsKey) ?? 100;
   }
 
   Future<void> setPremium() async {

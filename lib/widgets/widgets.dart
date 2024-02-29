@@ -14,3 +14,4 @@ export 'cell_widget.dart';
 export 'find_view.dart';
 export 'dialogs/exit_dialog.dart';
 export 'dialogs/info_dialog.dart';
+export 'info_item.dart';

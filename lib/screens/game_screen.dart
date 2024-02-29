@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -28,12 +29,13 @@ class GameScreen extends StatelessWidget {
               hasBG: false,
               child: Column(
                 children: [
-                  SizedBox(height: 19.h),
+                  SizedBox(height: 12.h),
                   GameAppBar(
                     balance: value.balance,
                     onClose: () => onShowExitDialog(context),
                     onInfo: () => onShowInfoDialog(context),
                   ),
+                  SizedBox(height: 12.h),
                   Expanded(
                     child: Center(
                       child: SizedBox(
@@ -102,7 +104,9 @@ class GameScreen extends StatelessWidget {
   }
 
   void onShowInfoDialog(BuildContext context) async {
-    await showCupertinoDialog(
+    await showDialog(
+      barrierColor: Colors.transparent,
+      useSafeArea: false,
       context: context,
       builder: (context) {
         return const InfoDialog();

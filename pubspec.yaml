@@ -82,6 +82,7 @@ flutter:
     - assets/png/cells/
     - assets/png/bg/
     - assets/png/views/
+    - assets/png/info/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
