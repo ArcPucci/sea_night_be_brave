@@ -15,8 +15,8 @@ class CellWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 336.r / 6,
-      height: 560.r / 10,
+      width: (336.r / 6).floorToDouble(),
+      height:( 560.r / 10).floorToDouble(),
       decoration: BoxDecoration(
         color: (box.isOpened && box is! User)
             ? box is Finish
