@@ -8,15 +8,17 @@ class CellWidget extends StatelessWidget {
   const CellWidget({
     super.key,
     required this.box,
+    this.onTap,
   });
 
   final Box box;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: (336.r / 6).floorToDouble(),
-      height:( 560.r / 10).floorToDouble(),
+      width: 56.r,
+      height: 56.r,
       decoration: BoxDecoration(
         color: (box.isOpened && box is! User)
             ? box is Finish
@@ -69,7 +71,7 @@ class CellWidget extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
               border: GradientBoxBorder(
-                width: 2.sp,
+                width: 2.r,
                 gradient: AppTheme.secondGradient,
               ),
             ),
