@@ -28,8 +28,7 @@ class GameScreen extends StatelessWidget {
           return PopScope(
             canPop: false,
             child: BGWidget(
-              hasBG: value.bgCard.image.isEmpty ? false : true,
-              bg: value.bgCard.image,
+              hasBG: false,
               child: Column(
                 children: [
                   SizedBox(height: 12.h),
@@ -38,12 +37,20 @@ class GameScreen extends StatelessWidget {
                     onClose: () => onShowExitDialog(context),
                     onInfo: () => onShowInfoDialog(context),
                   ),
-                  SizedBox(height: 12.h),
+                  SizedBox(height: 8.h),
                   Expanded(
                     child: Center(
-                      child: SizedBox(
+                      child: Container(
                         width: 336.r,
                         height: 560.r,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(value.bgCard.asset),
+                            fit: BoxFit.cover,
+                            opacity: 0.6,
+                          ),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
                         child: Stack(
                           children: [
                             Positioned.fill(
@@ -56,7 +63,10 @@ class GameScreen extends StatelessWidget {
                                           MainAxisAlignment.center,
                                       children: [
                                         for (int j = 0; j < value.width; j++)
-                                          CellWidget(box: value.matrix[i][j]),
+                                          CellWidget(
+                                            box: value.matrix[i][j],
+                                            onTap: () => value.onMove(j, i),
+                                          ),
                                       ],
                                     ),
                                 ],
@@ -84,7 +94,7 @@ class GameScreen extends StatelessWidget {
                     ),
                   ),
                   const TotalBalance(),
-                  SizedBox(height: 12.h),
+                  SizedBox(height: 8.h),
                 ],
               ),
             ),

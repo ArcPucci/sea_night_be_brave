@@ -49,7 +49,7 @@ class _BackgroundsScreenState extends State<BackgroundsScreen> {
                     _currentBG = index;
                     setState(() {});
                   },
-                  height: 428.h,
+                  height: 428.r,
                   aspectRatio: 256 / 420,
                   enlargeCenterPage: true,
                   enlargeFactor: 0.12,

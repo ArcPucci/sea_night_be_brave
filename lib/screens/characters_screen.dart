@@ -48,7 +48,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
                     _currentSkin = index;
                     setState(() {});
                   },
-                  height: 428.h,
+                  height: 428.r,
                   aspectRatio: 256 / 420,
                   enlargeCenterPage: true,
                   enlargeFactor: 0.12,

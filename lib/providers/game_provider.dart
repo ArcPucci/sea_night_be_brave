@@ -288,7 +288,10 @@ class GameProvider extends ChangeNotifier {
         notifyListeners();
         break;
       case Shark():
-        if (user.skin.contains('nicolas') && !_deviceUsed) break;
+        if (user.skin.contains('nicolas') && !_deviceUsed && _deviceWorks) {
+          _deviceUsed = true;
+          break;
+        }
         onBalanceMinus(20);
         _boxType = BoxType.shark;
         notifyListeners();
@@ -340,8 +343,16 @@ class GameProvider extends ChangeNotifier {
     }
   }
 
-// @override
-// void dispose() {
-//   super.dispose();
-// }
+  void onMove(int newX, int newY) {
+    if (x - newX == 1 && newY == y) {
+      goLeft();
+    } else if (x - newX == -1 && newY == y) {
+      goRight();
+    } else if (y - newY == 1 && newX == x) {
+      goUp();
+    } else if (y - newY == -1 && newX == x) {
+      goDown();
+    }
+    notifyListeners();
+  }
 }

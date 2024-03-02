@@ -8,43 +8,48 @@ class CellWidget extends StatelessWidget {
   const CellWidget({
     super.key,
     required this.box,
+    this.onTap,
   });
 
   final Box box;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 336.r / 6,
-      height: 560.r / 10,
-      decoration: BoxDecoration(
-        color: (box.isOpened && box is! User)
-            ? box is Finish
-                ? AppTheme.blue2
-                : AppTheme.darkBlue
-            : null,
-        borderRadius: BorderRadius.circular(4),
-        border: (box is User)
-            ? null
-            : GradientBoxBorder(
-                width: 2.r,
-                gradient: box.isOpened
-                    ? AppTheme.secondGradient
-                    : AppTheme.thirdGradient,
-              ),
-        image: (box is User || box is Finish)
-            ? null
-            : DecorationImage(
-                image: box.isOpened
-                    ? const AssetImage('assets/png/cells/bubbles.png')
-                    : const AssetImage('assets/png/cells/seabed.png'),
-                fit: BoxFit.cover,
-                alignment: Alignment.topCenter,
-              ),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 56.r,
+        height: 56.r,
+        decoration: BoxDecoration(
+          color: (box.isOpened && box is! User)
+              ? box is Finish
+                  ? AppTheme.blue2
+                  : AppTheme.darkBlue
+              : null,
+          borderRadius: BorderRadius.circular(4),
+          border: (box is User)
+              ? null
+              : GradientBoxBorder(
+                  width: 2.r,
+                  gradient: box.isOpened
+                      ? AppTheme.secondGradient
+                      : AppTheme.thirdGradient,
+                ),
+          image: (box is User || box is Finish)
+              ? null
+              : DecorationImage(
+                  image: box.isOpened
+                      ? const AssetImage('assets/png/cells/bubbles.png')
+                      : const AssetImage('assets/png/cells/seabed.png'),
+                  fit: BoxFit.cover,
+                  alignment: Alignment.topCenter,
+                ),
+        ),
+        alignment: Alignment.center,
+        clipBehavior: Clip.antiAlias,
+        child: _buildImage(),
       ),
-      alignment: Alignment.center,
-      clipBehavior: Clip.antiAlias,
-      child: _buildImage(),
     );
   }
 
@@ -69,7 +74,7 @@ class CellWidget extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
               border: GradientBoxBorder(
-                width: 2.sp,
+                width: 2.r,
                 gradient: AppTheme.secondGradient,
               ),
             ),
