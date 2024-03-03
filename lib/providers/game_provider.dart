@@ -79,8 +79,6 @@ class GameProvider extends ChangeNotifier {
 
   Box get _currentBox => matrix[y][x];
 
-  bool _deviceUsed = false;
-
   void _updatePosition(AxisDirection direction) {
     switch (direction) {
       case AxisDirection.up:
@@ -288,8 +286,8 @@ class GameProvider extends ChangeNotifier {
         notifyListeners();
         break;
       case Shark():
-        if (user.skin.contains('nicolas') && !_deviceUsed && _deviceWorks) {
-          _deviceUsed = true;
+        if (user.skin.contains('nicolas') && _deviceWorks) {
+          _deviceWorks = false;
           break;
         }
         onBalanceMinus(20);
